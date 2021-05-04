@@ -1,0 +1,79 @@
+<app-title [title]="'Jelentések'"></app-title>
+<div class="container mt-3">
+  <div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label class="mr-3" for="startDate">
+            Időpont
+          </label>
+          <input
+            id="startDate"
+
+            type="date"
+            name="announced"
+
+            required
+          >
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="form-group">
+          <label class="mr-3" for="endDate">
+            Időpont
+          </label>
+          <input
+            id="endDate"
+
+            type="date"
+            name="announced"
+
+            required
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label>
+            Lakók
+          </label>
+          <input
+            [(ngModel)]="residentId"
+            (change)="onResidentPick()"
+            list="residentList"
+            type="text"
+            #houseIdField="ngModel"
+            name="houseId"
+            class="form-control col-12"
+            required
+          >
+          <datalist id="residentList">
+            <select>
+              <option [ngValue]="balance.resident.id" *ngFor="let balance of getBalances()"
+                      [value]="balance.resident.id"> {{balance.resident.firstName}} {{balance.resident.lastName}}
+              </option>
+            </select>
+          </datalist>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <button
+        class="btn btn-primary text-center"
+      >
+        Teljes ház
+      </button>
+    </div>
+    <div class="col-3">
+      <button
+        class="btn btn-primary text-center"
+      >
+        Lekérdezés
+      </button>
+    </div>
+  </div>
+</div>

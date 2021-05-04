@@ -1,0 +1,105 @@
+<app-title [title]="'Lakások'"></app-title>
+<div class="container">
+  <div class="mt-5">
+    <div>
+      <button
+        class="btn btn-primary"
+        (click)="onNewHouse()"
+        *ngIf="!isNewHouse"
+      >
+        Új lakás hozzáadása
+      </button>
+    </div>
+    <div>
+      <button
+        class="btn btn-primary"
+        (click)="onNewHouse()"
+        *ngIf="isNewHouse"
+      >
+        Vissza a listaoldalhoz
+      </button>
+    </div>
+    <div *ngIf="isNewHouse">
+      <form [formGroup]="houseForm">
+        <div class="text-center new-house-box mx-auto">
+          <h3>Új lakás hozzáadása</h3>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="floor">
+                  Emelet
+                </label>
+                <input formControlName="floor" class="col-12 form-control" type="number" id="floor">
+                <div *ngIf="this.houseForm.get('floor').invalid && this.houseForm.get('floor').touched"
+                     class="text-danger">
+                  <small> Kérlek add meg az emeletet</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="door">
+                  Ajtó
+                </label>
+                <input formControlName="door" class="form-control" type="number" id="door">
+                <div *ngIf="this.houseForm.get('door').invalid && this.houseForm.get('door').touched" class="text-danger">
+                  <small> Kérlek add meg az ajtót</small>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="area">
+                  Alapterület
+                </label>
+                <input formControlName="area" class="form-control" type="number" id="area">
+                <div *ngIf="this.houseForm.get('area').invalid && this.houseForm.get('area').touched" class="text-danger">
+                  <small> Kérlek add meg az alapterületet</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="airspace">
+                  Beltér
+                </label>
+                <input formControlName="airspace" class="form-control" type="number" id="airspace">
+                <div *ngIf="this.houseForm.get('airspace').invalid && this.houseForm.get('airspace').touched"
+                     class="text-danger">
+                  <small> Kérlek add meg a belterületet</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button
+            type="submit"
+            (click)="onSubmit()"
+            class="btn btn-primary"
+            [disabled]="houseForm.invalid"
+          >
+            Új lakás mentése
+          </button>
+        </div>
+      </form>
+    </div>
+    <div>
+
+    </div>
+    <div *ngIf="!isNewHouse" class="row">
+      <div class="col-md-6 col-12" *ngFor="let house of getHouses(); trackBy: trackByFn; let i = index">
+        <app-house [house]="house"></app-house>
+      </div>
+    </div>
+
+  </div>
+</div>

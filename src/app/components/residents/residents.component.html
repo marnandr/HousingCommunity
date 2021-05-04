@@ -1,0 +1,105 @@
+<app-title [title]="'Lakók'"></app-title>
+<div class="container">
+  <div>
+    <button
+      class="btn btn-primary ml-2"
+      (click)="onNewResident()"
+      *ngIf="!isNewResident"
+    >
+      Új lakó
+    </button>
+    <button
+      *ngIf="isNewResident"
+      class="btn btn-primary ml-2"
+      (click)="onNewResident()"
+    >
+      Vissza a lista oldalhoz
+    </button>
+  </div>
+  <div *ngIf="isNewResident">
+    <form #residentForm="ngForm">
+      <div class="text-center new-house-box mx-auto">
+        <h3>Új lakó hozzáadása</h3>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="firstName">
+                Keresztnév
+              </label>
+              <input
+                name="firstName"
+                [(ngModel)]="resident.firstName"
+                #firstNameField="ngModel"
+                class="col-12 form-control"
+                type="text"
+                id="firstName"
+              >
+              <div *ngIf="firstNameField.invalid && firstNameField.touched" class="text-danger">
+                <small> Kérlek add meg a keresztnevet</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="lastName">
+                Vezetéknév
+              </label>
+              <input
+                name="lastName"
+                [(ngModel)]="resident.lastName"
+                #lastNameField="ngModel"
+                class="col-12 form-control"
+                type="text"
+                id="lastName">
+              <div *ngIf="lastNameField.invalid && lastNameField.touched" class="text-danger">
+                <small> Kérlek add meg a vezetéknevet</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label>
+                Életkor
+              </label>
+              <input
+                name="residentArea"
+                [(ngModel)]="resident.age"
+                class="col-12"
+                type="number"
+                id="area"
+                #residentAgeField="ngModel"
+                required
+              >
+              <div *ngIf="residentAgeField.touched && residentAgeField.invalid" class="text-danger">
+                <small> Kérlek add meg az életkort</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button
+            type="submit"
+            (click)="onSubmit()"
+            class="btn btn-primary"
+            [disabled]="residentForm.invalid"
+          >
+            Új lakó mentése
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="!isNewResident">
+    <div class="row" *ngIf="!isLoading">
+      <div class="col-6" *ngFor="let resident of getResidents()">
+        <app-resident [residentId]="resident.id" [resident]="resident"></app-resident>
+      </div>
+    </div>
+  </div>
+</div>
+
+

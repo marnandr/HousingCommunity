@@ -1,0 +1,36 @@
+<div class="card house-card-size mx-auto mt-3">
+  <div class="card-title">
+    <div class="row">
+      <div class="text-center col-12">
+        <h4>{{house.floor}}. emelet {{house.door}}. ajtó </h4>
+      </div>
+    </div>
+    <hr>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <p>
+            Alapterület: {{house.area}} négyzetméter
+          </p>
+        </div>
+        <div class="col-6">
+          <p>
+            Légtér: {{house.airspace}} légköbméter
+          </p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isList" class="card-footer">
+      <div
+        class="col-12"
+      >
+        <button
+        class="btn btn-danger"
+        (click)="onDelete(house.id)"
+        >
+          Törlés
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

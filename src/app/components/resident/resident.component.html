@@ -1,0 +1,62 @@
+
+  <div class="card ml-5 mt-3 mx-auto">
+    <div class="card-body">
+      <h5 class="card-title">{{resident.firstName}} {{ resident.lastName}}</h5>
+      <p class="card-text"> {{resident.age}} éves </p>
+      <hr>
+      <div *ngIf="isList" class="text-center">
+        <button *ngIf="!resident.apartment" (click)="openMoveModal()" class="btn btn-primary">Beköltözés</button>
+        <div *ngIf="resident.apartment">
+          <app-house [isList]="false" [house]="resident.apartment"></app-house>
+          <button *ngIf="!resident.apartment" (click)="openMoveModal()" class="btn btn-danger">Kiköltözés</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+<ng-template #moveModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Válaszd ki a lakást</h4>
+  </div>
+  <div class="modal-body">
+    <div class="col-12 text-center">
+      <label class="col-12">
+        Lakások
+      </label>
+      <input
+        [(ngModel)]="houseId"
+        (change)="onHouseChoose()"
+        list="houseList"
+        type="text"
+        #houseIdField="ngModel"
+        name="houseId"
+      >
+      <datalist id="houseList">
+        <select>
+          <option [ngValue]="house.id" *ngFor="let house of getHouses()" [value]="house.id"> {{house.floor}}.em
+            /{{house.door}}. ajtó
+          </option>
+        </select>
+      </datalist>
+    </div>
+
+    <div *ngIf="isSet">
+      <div class="col-12">
+        <app-house [isList]="false" [house]="selectedHouse"></app-house>
+      </div>
+      <div class="col-12">
+        <label class="ml-1 mr-3 mt-3" for="startingAmount">
+          Kezdő egyenleg
+        </label>
+        <input type="number" id="startingAmount" [(ngModel)]="statingAmount" #startingAmountField="ngModel">
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger float-left" (click)="closeModal()">Bezár</button>
+    <button *ngIf="isSet" type="button" class="btn btn-primary float-right" (click)="onSubmit(true)">Beköltözés</button>
+  </div>
+</ng-template>

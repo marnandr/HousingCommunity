@@ -1,0 +1,112 @@
+<app-title [title]="'Egyéni befizetések'"></app-title>
+<div class="container">
+  <div>
+    <button
+      class="btn btn-primary"
+      (click)="onNewPayment()"
+      *ngIf="!isNewPayment"
+    >
+      Új befizetés hozzáadása
+    </button>
+  </div>
+  <div>
+    <button
+      class="btn btn-primary"
+      (click)="onNewPayment()"
+      *ngIf="isNewPayment"
+    >
+      Vissza a listaoldalhoz
+    </button>
+  </div>
+  <div *ngIf="isNewPayment">
+    <form #paymentForm="ngForm">
+      <div class="text-center new-house-box mx-auto">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label
+                for="paymentAmount">
+                Összeg
+              </label>
+              <input
+                id="paymentAmount"
+                type="number"
+                class="form-control col-12"
+                [(ngModel)]="amount"
+                #amountField="ngModel"
+                name="amount"
+                required
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label>
+                Lakó
+              </label>
+              <input
+                [(ngModel)]="residentId"
+                (change)="onResidentPick()"
+                list="residentList"
+                type="text"
+                #houseIdField="ngModel"
+                name="houseId"
+                class="form-control col-12"
+                required
+              >
+              <datalist id="residentList">
+                <select>
+                  <option [ngValue]="balance.resident.id" *ngFor="let balance of getBalances()"
+                          [value]="balance.resident.id"> {{balance.resident.firstName}} {{balance.resident.lastName}}
+                  </option>
+                </select>
+              </datalist>
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="announced">
+                Időpont
+              </label>
+              <input
+                id="announced"
+                #announcedField="ngModel"
+                type="date"
+                name="announced"
+                [(ngModel)]="announced"
+                required
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-12 text-center">
+          <app-resident [isList]="false" *ngIf="isSet" [resident]="loadedResident"></app-resident>
+        </div>
+      </div>
+      <div *ngIf="isSet" class="text-center">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="addPayment(); paymentForm.reset()"
+          [disabled]="paymentForm.invalid"
+        >
+          Számla mentése
+        </button>
+      </div>
+    </form>
+  </div>
+  <div>
+
+  </div>
+  <div class="row" *ngIf="!isNewPayment">
+    <div class="col-6" *ngFor="let bill of getBalances()">
+      <app-bill [bill]="bill"></app-bill>
+    </div>
+  </div>
+
+</div>

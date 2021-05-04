@@ -1,0 +1,191 @@
+<app-title [title]="'Költségek elosztása'"></app-title>
+<div class="container">
+  <div class="col-12 text-center mt-5">
+    <button
+      class="btn btn-primary mr-3"
+      (click)="onCommonExpense()"
+    >
+      Közös költség kiállítása
+    </button>
+    <button
+      (click)="onDifferentExpense()"
+      class="btn btn-primary ml-3"
+    >
+      Egyedi költség
+    </button>
+  </div>
+  <div *ngIf="isCommonExpense" class="mt-5">
+    <form #expenseForm="ngForm">
+      <div class="text-center new-house-box mx-auto">
+        <h3>Új közös költség hozzáadása</h3>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="expense">
+                Egység ár
+              </label>
+              <input
+                name="expense"
+                [(ngModel)]="expense.amount"
+                #expenseField="ngModel"
+                class="col-12 form-control"
+                type="number"
+                id="expense"
+                required
+              >
+              <div *ngIf="expenseField.invalid && expenseField.touched" class="text-danger">
+                <small> Kérlek add meg az egység árat</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label class="col-12" for="comment">
+                Leírás
+              </label>
+              <input
+                name="lastName"
+                [(ngModel)]="expense.comment"
+                #commentField="ngModel"
+                class="col-12 form-control"
+                type="text"
+                id="comment"
+                required
+              >
+              <div *ngIf="commentField.invalid && commentField.touched" class="text-danger">
+                <small> Kérlek add meg a leírást</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="announcedTime">
+                Időpont
+              </label>
+              <input
+                id="announcedTime"
+                #announcedField="ngModel"
+                type="date"
+                name="announced"
+                [(ngModel)]="expense.announced"
+                required
+              >
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            type="submit"
+            (click)="onReview(false)"
+            class="btn btn-primary mt-5"
+            [disabled]="expenseForm.invalid"
+          >
+            Ellenőrzés
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="isDifferentExpense">
+    <form #uniqueExpenseForm="ngForm">
+      <div class="justify-content-center">
+        <div class="new-house-box text-center mx-auto">
+          <h3>Új egyedi költség hozzáadása</h3>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label class="col-12" for="expense">
+                  Összeár
+                </label>
+                <input
+                  name="expense"
+                  [(ngModel)]="expense.amount"
+                  #expenseField="ngModel"
+                  class="col-12 form-control"
+                  type="number"
+                  id="uniqueExpenseAmount"
+                  required
+                >
+                <div *ngIf="expenseField.invalid && expenseField.touched" class="text-danger">
+                  <small> Kérlek add meg az összes árat</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="comment" style="width: 100px">
+                  Leírás
+                </label>
+                <input
+                  name="lastName"
+                  [(ngModel)]="expense.comment"
+                  #commentField="ngModel"
+                  class="col-12 form-control"
+                  type="text"
+                  id="uniqueExpenseDescription"
+                  required
+                >
+                <div *ngIf="commentField.invalid && commentField.touched" class="text-danger">
+                  <small> Kérlek add meg a leírást</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="announced">
+                  Időpont
+                </label>
+                <input
+                  id="announced"
+                  #announcedField="ngModel"
+                  type="date"
+                  name="announced"
+                  [(ngModel)]="expense.announced"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button
+            type="submit"
+            (click)="onReview(true)"
+            class="btn btn-primary"
+            [disabled]="uniqueExpenseForm.invalid"
+          >
+            Ellenőrzés
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="isCalculated">
+    <app-title [title]="expense.comment"></app-title>
+    <div class="container" *ngFor="let calculation of calculatedPrice">
+      <div class="row">
+        <h4>{{calculation['floor']}}. emelet </h4><h4> {{calculation['door']}}. ajtó</h4>
+      </div>
+      <div class="row">
+        <h4>Ráeső költség: {{calculation.price | currency: 'HUF'}}</h4>
+      </div>
+    </div>
+    <button
+      type="submit"
+      (click)="onSubmit()"
+      class="btn btn-primary mt-5"
+    >
+      Mentés
+    </button>
+  </div>
+
+</div>
