@@ -11,15 +11,28 @@ export class HousesService {
   getHousesUrl = `${this.config.api}apartments`;
   saveHouseUrl = `${this.config.api}save-apartment`;
   deleteHouseUrl = `${this.config.api}delete-apartment/`;
+  movedResidentUrl = `${this.config.api}moved-apartments`;
+
+  _movedHouses;
   _houses;
 
   get houses(): HouseModel[] {
-    return this._houses
+    return this._houses;
   }
 
   set houses(val) {
-    this._houses = val
+    this._houses = val;
   }
+
+  get movedHouses(): any {
+    return this._movedHouses;
+  }
+
+  set movedHouses(val) {
+    this._movedHouses = val;
+  }
+
+
 
   constructor(
     private http: HttpClient,
@@ -30,14 +43,21 @@ export class HousesService {
 
   getHouses(): any {
     return this.http.get(this.getHousesUrl).pipe(map((resp: any) => {
-        this.houses = resp
+        this.houses = resp;
         return resp;
       })
     )
   }
 
+  getMovedApartments() {
+    return this.http.get(this.movedResidentUrl).pipe(map((resp: any) => {
+      this.movedHouses = resp;
+      return resp;
+    }));
+  }
+
   getHouse(id: number): any {
-    return this.houses.find( x => x.id == id);
+    return this.houses.find(x => x.id == id);
   }
 
   saveHouse(house: HouseModel): any {

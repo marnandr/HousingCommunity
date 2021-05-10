@@ -12,7 +12,7 @@ export class ResidentService {
   saveResidentUrl = `${this.config.api}save-resident`;
   moveResidentUrl = `${this.config.api}move-resident`;
 
-  _residents: ResidentModel[]
+  _residents: ResidentModel[];
 
   get residents() {
     return this._residents;
@@ -31,10 +31,12 @@ export class ResidentService {
 
   getResidents() {
     return this.http.get(this.getResidentsUrl).pipe(map((resp: any) => {
-      this.residents = resp
+      this.residents = resp;
       return resp;
     }));
   }
+
+
 
   saveResident(resident: ResidentModel) {
     return this.http.post(this.saveResidentUrl, resident).pipe(map((resp: any) => {

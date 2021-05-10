@@ -27,8 +27,8 @@ export class ExpensesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.houseService.getHouses().subscribe(resp => {
-    })
+    this.houseService.getMovedApartments().subscribe(resp => {
+    });
   }
 
   onSubmit() {
@@ -44,7 +44,7 @@ export class ExpensesComponent implements OnInit {
   }
 
   getHouses() {
-    return this.houseService.houses;
+    return this.houseService.movedHouses;
   }
 
   onReview(isUnique: boolean) {
@@ -52,7 +52,7 @@ export class ExpensesComponent implements OnInit {
     if (this.isUnique) {
       this.calculateUnique();
     } else {
-      this.calculateCommon()
+      this.calculateCommon();
     }
   }
 
@@ -62,15 +62,14 @@ export class ExpensesComponent implements OnInit {
     const calculatedAmount = Math.floor(this.expense.amount / count);
     this.getHouses().forEach(obj => {
       calculatedObject.push({
-        floor: obj.floor,
-        door: obj.door,
+        floor: obj.apartment.floor,
+        door: obj.apartment.door,
         price: calculatedAmount
       });
     })
     this.calculatedPrice = calculatedObject;
     this.isCalculated = true
   }
-  //updatelj 
 
   calculateCommon() {
     let calculatedObject = [];
@@ -81,15 +80,13 @@ export class ExpensesComponent implements OnInit {
       sumArea += obj.area;
     })
 
-    const unitPrice = this.expense.amount / sumArea;
-
     this.getHouses().forEach(obj => {
       calculatedObject.push({
-        floor: obj.floor,
-        door: obj.door,
-        price: Math.floor(obj.area * unitPrice)
-      })
-    })
+        floor: obj.apartment.floor,
+        door: obj.apartment.door,
+        price: Math.floor(obj.apartment.area * this.expense.amount)
+      });
+    });
     this.calculatedPrice = calculatedObject;
     this.isCalculated = true
   }

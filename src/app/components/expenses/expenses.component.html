@@ -169,9 +169,9 @@
       </div>
     </form>
   </div>
-  <div *ngIf="isCalculated">
+  <div class="mx-auto calculation-box" *ngIf="isCalculated">
     <app-title [title]="expense.comment"></app-title>
-    <div class="container" *ngFor="let calculation of calculatedPrice">
+    <div  *ngFor="let calculation of calculatedPrice">
       <div class="row">
         <h4>{{calculation['floor']}}. emelet </h4><h4> {{calculation['door']}}. ajtó</h4>
       </div>

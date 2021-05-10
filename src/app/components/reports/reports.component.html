@@ -9,10 +9,10 @@
           </label>
           <input
             id="startDate"
-
+            [(ngModel)]="startDate"
             type="date"
             name="announced"
-
+            #startDateField="ngModel"
             required
           >
         </div>
@@ -25,10 +25,10 @@
           </label>
           <input
             id="endDate"
-
+            [(ngModel)]="endDate"
             type="date"
             name="announced"
-
+            #endDateField="ngModel"
             required
           >
         </div>
@@ -60,20 +60,41 @@
 
         </div>
       </div>
+      <div class="col-3">
+        <button
+          (click)="setAllResident()"
+          class="btn btn-primary text-center report-buttons"
+        >
+          Teljes ház
+        </button>
+      </div>
+      <div class="col-3">
+        <button
+          (click)="onSubmit()"
+          class="btn btn-primary text-center report-buttons"
+        >
+          Lekérdezés
+        </button>
+      </div>
     </div>
-    <div class="col-3">
-      <button
-        class="btn btn-primary text-center"
-      >
-        Teljes ház
-      </button>
-    </div>
-    <div class="col-3">
-      <button
-        class="btn btn-primary text-center"
-      >
-        Lekérdezés
-      </button>
+    <div *ngIf="hasReport && hasReportExpense">
+      <h2>
+        Eredmények
+      </h2>
+      <div>
+        <h3> Bevétel</h3>
+        <div *ngFor="let report of getReports()">
+          <app-payment [payment]="report" class="col-6" [isIncome]="true"></app-payment>
+        </div>
+        <h3> Kiadás</h3>
+        <div *ngFor="let expense of getReportExpense()">
+          <app-payment [payment]="expense" class="col-6" [isIncome]="false"></app-payment>
+        </div>
+      </div>
+
     </div>
   </div>
+  <!--app-payment></app-payment-->
+
 </div>
+

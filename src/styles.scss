@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-.icon-size{
+.icon-size {
   height: 25px;
   width: 25px;
 }
@@ -8,6 +8,36 @@
 .new-house-box {
   max-width: 400px;
   padding: 25px 0;
+}
+
+.calculation-box {
+  margin-top: 10px;
+  display: grid;
+  justify-content: center
+}
+
+.report-buttons {
+  display: flex;
+  padding: 20px;
+}
+
+.payment-box {
+  display: flex;
+  justify-content: center;
+}
+
+.income-box {
+  background: #cde3c6;
+  border: 1px solid green;
+  margin: 10px 20px 10px 20px;
+  padding: 20px;
+}
+
+.expense-box {
+  background: #e2b9b9;
+  border: 1px solid #ff4646;
+  margin: 10px 20px 10px 20px;
+  padding: 20px;
 }
 
 /* Importing Bootstrap SCSS file. */

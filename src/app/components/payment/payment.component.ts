@@ -8,18 +8,20 @@ import {ResidentService} from "../../services/resident.service";
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  @Input() payment: ExpenseModel
+  @Input() payment: ExpenseModel;
+  @Input() isIncome: boolean;
+
   constructor(
   ) { }
 
   ngOnInit(): void {
   }
 
-  classSetter(isIncome: boolean){
-    if (isIncome){
-      return 'text-white bg-success';
+  classSetter(){
+    if (this.isIncome){
+      return 'income-box';
     }else {
-      return  'text-white bg-danger';
+      return  'expense-box';
     }
   }
 }
